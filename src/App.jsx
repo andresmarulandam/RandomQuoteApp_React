@@ -5,6 +5,7 @@ import axios from 'axios';
 
 function App() {
   const [advice, setAdvice] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAdvice();
@@ -15,11 +16,16 @@ function App() {
       const response = await axios.get('https://api.adviceslip.com/advice');
       const { advice } = response.data.slip;
       setAdvice(advice);
+      setLoading(false);
       console.log(advice);
     } catch (error) {
       console.error('Error fetching advice', error.message);
     }
   };
+
+  if (loading) {
+    return <p>is Loading...</p>;
+  }
 
   return (
     <div className="app">
